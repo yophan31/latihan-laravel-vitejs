@@ -52,7 +52,7 @@ class TodoController extends Controller
             ],
         ];
 
-        return Inertia::render('App/TodosPage', $data);
+        return Inertia::render('app/TodosPage', $data);
     }
 
     public function store(Request $request)
