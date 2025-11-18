@@ -30,7 +30,7 @@ export default function LoginPage() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        post("/auth/login");
+        post("/auth/login/post");
     };
 
     return (

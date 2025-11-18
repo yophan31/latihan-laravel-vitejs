@@ -28,7 +28,7 @@ export default function RegisterPage() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        post("/auth/register", {
+        post("/auth/register/post", {
             onSuccess: () => {
                 reset("name", "email", "password");
             },
