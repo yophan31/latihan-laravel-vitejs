@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { router, usePage } from "@inertiajs/react";
-import AppLayout from "@/Layouts/AppLayout";
+import AppLayout from "@/Layou/AppLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Search, Plus, Trash2, Edit, CheckCircle, XCircle, Image, GripVertical } from "lucide-react";
+import {
+    Search,
+    Plus,
+    Trash2,
+    Edit,
+    CheckCircle,
+    XCircle,
+    Image,
+    GripVertical,
+} from "lucide-react";
 import Swal from "sweetalert2";
 import Chart from "react-apexcharts";
 import {
@@ -52,7 +61,13 @@ function SortableTodoCard({ todo, onToggle, onEdit, onDelete, onUpdateCover }) {
                             className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                         <div className="absolute top-2 right-2">
-                            <Badge className={todo.is_finished ? "bg-gradient-to-r from-emerald-500 to-teal-500" : "bg-gradient-to-r from-amber-500 to-orange-500"}>
+                            <Badge
+                                className={
+                                    todo.is_finished
+                                        ? "bg-gradient-to-r from-emerald-500 to-teal-500"
+                                        : "bg-gradient-to-r from-amber-500 to-orange-500"
+                                }
+                            >
                                 {todo.is_finished ? "✓ Selesai" : "⏳ Proses"}
                             </Badge>
                         </div>
@@ -68,10 +83,20 @@ function SortableTodoCard({ todo, onToggle, onEdit, onDelete, onUpdateCover }) {
                             <GripVertical className="w-5 h-5" />
                         </div>
                         <div className="flex-1">
-                            <h3 className="font-bold text-lg text-slate-800 mb-1">{todo.title}</h3>
+                            <h3 className="font-bold text-lg text-slate-800 mb-1">
+                                {todo.title}
+                            </h3>
                             {!todo.cover && (
-                                <Badge className={todo.is_finished ? "bg-gradient-to-r from-emerald-500 to-teal-500 mb-2" : "bg-gradient-to-r from-amber-500 to-orange-500 mb-2"}>
-                                    {todo.is_finished ? "✓ Selesai" : "⏳ Proses"}
+                                <Badge
+                                    className={
+                                        todo.is_finished
+                                            ? "bg-gradient-to-r from-emerald-500 to-teal-500 mb-2"
+                                            : "bg-gradient-to-r from-amber-500 to-orange-500 mb-2"
+                                    }
+                                >
+                                    {todo.is_finished
+                                        ? "✓ Selesai"
+                                        : "⏳ Proses"}
                                 </Badge>
                             )}
                             <p className="text-slate-600 text-sm leading-relaxed">
@@ -83,11 +108,17 @@ function SortableTodoCard({ todo, onToggle, onEdit, onDelete, onUpdateCover }) {
                         <Button
                             size="sm"
                             onClick={() => onToggle(todo.id)}
-                            className={`flex-1 ${todo.is_finished 
-                                ? "bg-gradient-to-r from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700" 
-                                : "bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600"}`}
+                            className={`flex-1 ${
+                                todo.is_finished
+                                    ? "bg-gradient-to-r from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700"
+                                    : "bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600"
+                            }`}
                         >
-                            {todo.is_finished ? <XCircle className="w-4 h-4 mr-1" /> : <CheckCircle className="w-4 h-4 mr-1" />}
+                            {todo.is_finished ? (
+                                <XCircle className="w-4 h-4 mr-1" />
+                            ) : (
+                                <CheckCircle className="w-4 h-4 mr-1" />
+                            )}
                             {todo.is_finished ? "Batal" : "Selesai"}
                         </Button>
                         <Button
@@ -97,9 +128,13 @@ function SortableTodoCard({ todo, onToggle, onEdit, onDelete, onUpdateCover }) {
                         >
                             <Edit className="w-4 h-4" />
                         </Button>
-                        <Button 
-                            size="sm" 
-                            onClick={() => document.getElementById(`cover-${todo.id}`).click()}
+                        <Button
+                            size="sm"
+                            onClick={() =>
+                                document
+                                    .getElementById(`cover-${todo.id}`)
+                                    .click()
+                            }
                             className="bg-gradient-to-r from-violet-500 to-purple-500 hover:from-violet-600 hover:to-purple-600"
                         >
                             <Image className="w-4 h-4" />
@@ -109,10 +144,12 @@ function SortableTodoCard({ todo, onToggle, onEdit, onDelete, onUpdateCover }) {
                             type="file"
                             accept="image/*"
                             className="hidden"
-                            onChange={(e) => onUpdateCover(todo.id, e.target.files[0])}
+                            onChange={(e) =>
+                                onUpdateCover(todo.id, e.target.files[0])
+                            }
                         />
-                        <Button 
-                            size="sm" 
+                        <Button
+                            size="sm"
                             onClick={() => onDelete(todo.id)}
                             className="bg-gradient-to-r from-rose-500 to-red-500 hover:from-rose-600 hover:to-red-600"
                         >
@@ -132,7 +169,11 @@ export default function TodosPage() {
     const [showAddModal, setShowAddModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [currentTodo, setCurrentTodo] = useState(null);
-    const [formData, setFormData] = useState({ title: "", description: "", cover: null });
+    const [formData, setFormData] = useState({
+        title: "",
+        description: "",
+        cover: null,
+    });
     const [todoItems, setTodoItems] = useState(todos.data || []);
 
     const sensors = useSensors(
@@ -160,16 +201,16 @@ export default function TodosPage() {
     }, [flash]);
 
     const chartOptions = {
-        chart: { 
-            type: "donut", 
+        chart: {
+            type: "donut",
             toolbar: { show: false },
-            fontFamily: 'inherit',
+            fontFamily: "inherit",
         },
         labels: ["Selesai", "Belum Selesai"],
         colors: ["#10b981", "#3b82f6"],
-        legend: { 
+        legend: {
             position: "bottom",
-            fontSize: '14px',
+            fontSize: "14px",
             fontWeight: 500,
         },
         plotOptions: {
@@ -181,9 +222,9 @@ export default function TodosPage() {
                         total: {
                             show: true,
                             label: "Total Todos",
-                            fontSize: '16px',
+                            fontSize: "16px",
                             fontWeight: 600,
-                            color: '#1e293b',
+                            color: "#1e293b",
                             formatter: () => stats.total,
                         },
                     },
@@ -193,7 +234,7 @@ export default function TodosPage() {
         dataLabels: {
             enabled: true,
             style: {
-                fontSize: '14px',
+                fontSize: "14px",
                 fontWeight: 600,
             },
         },
@@ -205,7 +246,9 @@ export default function TodosPage() {
         const { active, over } = event;
         if (active.id !== over.id) {
             setTodoItems((items) => {
-                const oldIndex = items.findIndex((item) => item.id === active.id);
+                const oldIndex = items.findIndex(
+                    (item) => item.id === active.id
+                );
                 const newIndex = items.findIndex((item) => item.id === over.id);
                 return arrayMove(items, oldIndex, newIndex);
             });
@@ -213,17 +256,30 @@ export default function TodosPage() {
     };
 
     const handleSearch = () => {
-        router.get("/todos", { search: searchQuery, filter: filterStatus }, { preserveState: true });
+        router.get(
+            "/todos",
+            { search: searchQuery, filter: filterStatus },
+            { preserveState: true }
+        );
     };
 
     const handleFilter = (status) => {
         setFilterStatus(status);
-        router.get("/todos", { search: searchQuery, filter: status }, { preserveState: true });
+        router.get(
+            "/todos",
+            { search: searchQuery, filter: status },
+            { preserveState: true }
+        );
     };
 
     const handleAddTodo = () => {
         if (!formData.title) {
-            Swal.fire({ icon: "error", title: "Gagal!", text: "Judul harus diisi!", confirmButtonColor: "#ef4444" });
+            Swal.fire({
+                icon: "error",
+                title: "Gagal!",
+                text: "Judul harus diisi!",
+                confirmButtonColor: "#ef4444",
+            });
             return;
         }
 
@@ -242,7 +298,12 @@ export default function TodosPage() {
 
     const handleEditTodo = () => {
         if (!formData.title) {
-            Swal.fire({ icon: "error", title: "Gagal!", text: "Judul harus diisi!", confirmButtonColor: "#ef4444" });
+            Swal.fire({
+                icon: "error",
+                title: "Gagal!",
+                text: "Judul harus diisi!",
+                confirmButtonColor: "#ef4444",
+            });
             return;
         }
 
@@ -290,42 +351,63 @@ export default function TodosPage() {
                         <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 bg-clip-text text-transparent">
                             📝 Todos Saya
                         </h1>
-                        <p className="text-slate-600 mt-2">Kelola aktivitas Anda dengan mudah, {auth.name}!</p>
+                        <p className="text-slate-600 mt-2">
+                            Kelola aktivitas Anda dengan mudah, {auth.name}!
+                        </p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         <Card className="border-0 bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-xl hover:shadow-2xl transition-all">
                             <CardHeader className="pb-3">
-                                <CardTitle className="text-sm font-medium opacity-90">Total Todos</CardTitle>
+                                <CardTitle className="text-sm font-medium opacity-90">
+                                    Total Todos
+                                </CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <div className="text-5xl font-bold">{stats.total}</div>
+                                <div className="text-5xl font-bold">
+                                    {stats.total}
+                                </div>
                             </CardContent>
                         </Card>
                         <Card className="border-0 bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-xl hover:shadow-2xl transition-all">
                             <CardHeader className="pb-3">
-                                <CardTitle className="text-sm font-medium opacity-90">Selesai</CardTitle>
+                                <CardTitle className="text-sm font-medium opacity-90">
+                                    Selesai
+                                </CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <div className="text-5xl font-bold">{stats.finished}</div>
+                                <div className="text-5xl font-bold">
+                                    {stats.finished}
+                                </div>
                             </CardContent>
                         </Card>
                         <Card className="border-0 bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-xl hover:shadow-2xl transition-all">
                             <CardHeader className="pb-3">
-                                <CardTitle className="text-sm font-medium opacity-90">Belum Selesai</CardTitle>
+                                <CardTitle className="text-sm font-medium opacity-90">
+                                    Belum Selesai
+                                </CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <div className="text-5xl font-bold">{stats.unfinished}</div>
+                                <div className="text-5xl font-bold">
+                                    {stats.unfinished}
+                                </div>
                             </CardContent>
                         </Card>
                     </div>
 
                     <Card className="mb-8 shadow-xl border-0 bg-white/80 backdrop-blur-sm">
                         <CardHeader className="border-b bg-gradient-to-r from-slate-50 to-blue-50">
-                            <CardTitle className="text-slate-800">📊 Statistik Todos</CardTitle>
+                            <CardTitle className="text-slate-800">
+                                📊 Statistik Todos
+                            </CardTitle>
                         </CardHeader>
                         <CardContent className="pt-6">
-                            <Chart options={chartOptions} series={chartSeries} type="donut" height={320} />
+                            <Chart
+                                options={chartOptions}
+                                series={chartSeries}
+                                type="donut"
+                                height={320}
+                            />
                         </CardContent>
                     </Card>
 
@@ -336,46 +418,90 @@ export default function TodosPage() {
                                     <Input
                                         placeholder="🔍 Cari todos..."
                                         value={searchQuery}
-                                        onChange={(e) => setSearchQuery(e.target.value)}
-                                        onKeyPress={(e) => e.key === "Enter" && handleSearch()}
+                                        onChange={(e) =>
+                                            setSearchQuery(e.target.value)
+                                        }
+                                        onKeyPress={(e) =>
+                                            e.key === "Enter" && handleSearch()
+                                        }
                                         className="border-slate-300 focus:border-blue-500"
                                     />
-                                    <Button onClick={handleSearch} className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700">
+                                    <Button
+                                        onClick={handleSearch}
+                                        className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700"
+                                    >
                                         <Search className="w-4 h-4" />
                                     </Button>
                                 </div>
                                 <div className="flex gap-2">
                                     <Button
-                                        variant={filterStatus === "all" ? "default" : "outline"}
+                                        variant={
+                                            filterStatus === "all"
+                                                ? "default"
+                                                : "outline"
+                                        }
                                         onClick={() => handleFilter("all")}
-                                        className={filterStatus === "all" ? "bg-gradient-to-r from-blue-500 to-indigo-600" : ""}
+                                        className={
+                                            filterStatus === "all"
+                                                ? "bg-gradient-to-r from-blue-500 to-indigo-600"
+                                                : ""
+                                        }
                                     >
                                         Semua
                                     </Button>
                                     <Button
-                                        variant={filterStatus === "finished" ? "default" : "outline"}
+                                        variant={
+                                            filterStatus === "finished"
+                                                ? "default"
+                                                : "outline"
+                                        }
                                         onClick={() => handleFilter("finished")}
-                                        className={filterStatus === "finished" ? "bg-gradient-to-r from-emerald-500 to-teal-600" : ""}
+                                        className={
+                                            filterStatus === "finished"
+                                                ? "bg-gradient-to-r from-emerald-500 to-teal-600"
+                                                : ""
+                                        }
                                     >
                                         Selesai
                                     </Button>
                                     <Button
-                                        variant={filterStatus === "unfinished" ? "default" : "outline"}
-                                        onClick={() => handleFilter("unfinished")}
-                                        className={filterStatus === "unfinished" ? "bg-gradient-to-r from-amber-500 to-orange-600" : ""}
+                                        variant={
+                                            filterStatus === "unfinished"
+                                                ? "default"
+                                                : "outline"
+                                        }
+                                        onClick={() =>
+                                            handleFilter("unfinished")
+                                        }
+                                        className={
+                                            filterStatus === "unfinished"
+                                                ? "bg-gradient-to-r from-amber-500 to-orange-600"
+                                                : ""
+                                        }
                                     >
                                         Belum
                                     </Button>
                                 </div>
-                                <Button onClick={() => setShowAddModal(true)} className="bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700">
-                                    <Plus className="w-4 h-4 mr-2" /> Tambah Todo
+                                <Button
+                                    onClick={() => setShowAddModal(true)}
+                                    className="bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700"
+                                >
+                                    <Plus className="w-4 h-4 mr-2" /> Tambah
+                                    Todo
                                 </Button>
                             </div>
                         </CardContent>
                     </Card>
 
-                    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-                        <SortableContext items={todoItems.map(t => t.id)} strategy={verticalListSortingStrategy}>
+                    <DndContext
+                        sensors={sensors}
+                        collisionDetection={closestCenter}
+                        onDragEnd={handleDragEnd}
+                    >
+                        <SortableContext
+                            items={todoItems.map((t) => t.id)}
+                            strategy={verticalListSortingStrategy}
+                        >
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {todoItems.map((todo) => (
                                     <SortableTodoCard
@@ -384,7 +510,11 @@ export default function TodosPage() {
                                         onToggle={handleToggleFinish}
                                         onEdit={(todo) => {
                                             setCurrentTodo(todo);
-                                            setFormData({ title: todo.title, description: todo.description, cover: null });
+                                            setFormData({
+                                                title: todo.title,
+                                                description: todo.description,
+                                                cover: null,
+                                            });
                                             setShowEditModal(true);
                                         }}
                                         onDelete={handleDeleteTodo}
@@ -400,12 +530,22 @@ export default function TodosPage() {
                             {todos.links.map((link, index) => (
                                 <Button
                                     key={index}
-                                    variant={link.active ? "default" : "outline"}
+                                    variant={
+                                        link.active ? "default" : "outline"
+                                    }
                                     size="sm"
                                     disabled={!link.url}
-                                    onClick={() => link.url && router.get(link.url)}
-                                    className={link.active ? "bg-gradient-to-r from-blue-500 to-indigo-600" : ""}
-                                    dangerouslySetInnerHTML={{ __html: link.label }}
+                                    onClick={() =>
+                                        link.url && router.get(link.url)
+                                    }
+                                    className={
+                                        link.active
+                                            ? "bg-gradient-to-r from-blue-500 to-indigo-600"
+                                            : ""
+                                    }
+                                    dangerouslySetInnerHTML={{
+                                        __html: link.label,
+                                    }}
                                 />
                             ))}
                         </div>
@@ -424,7 +564,12 @@ export default function TodosPage() {
                                 <Input
                                     placeholder="Judul todo..."
                                     value={formData.title}
-                                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                                    onChange={(e) =>
+                                        setFormData({
+                                            ...formData,
+                                            title: e.target.value,
+                                        })
+                                    }
                                     className="border-slate-300"
                                 />
                                 <textarea
@@ -432,14 +577,35 @@ export default function TodosPage() {
                                     rows="4"
                                     placeholder="Deskripsi (opsional)..."
                                     value={formData.description}
-                                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                                    onChange={(e) =>
+                                        setFormData({
+                                            ...formData,
+                                            description: e.target.value,
+                                        })
+                                    }
                                 />
-                                <Input type="file" accept="image/*" onChange={(e) => setFormData({ ...formData, cover: e.target.files[0] })} />
+                                <Input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={(e) =>
+                                        setFormData({
+                                            ...formData,
+                                            cover: e.target.files[0],
+                                        })
+                                    }
+                                />
                                 <div className="flex gap-2">
-                                    <Button onClick={handleAddTodo} className="flex-1 bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700">
+                                    <Button
+                                        onClick={handleAddTodo}
+                                        className="flex-1 bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700"
+                                    >
                                         Simpan
                                     </Button>
-                                    <Button onClick={() => setShowAddModal(false)} variant="outline" className="flex-1">
+                                    <Button
+                                        onClick={() => setShowAddModal(false)}
+                                        variant="outline"
+                                        className="flex-1"
+                                    >
                                         Batal
                                     </Button>
                                 </div>
@@ -460,7 +626,12 @@ export default function TodosPage() {
                                 <Input
                                     placeholder="Judul todo..."
                                     value={formData.title}
-                                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                                    onChange={(e) =>
+                                        setFormData({
+                                            ...formData,
+                                            title: e.target.value,
+                                        })
+                                    }
                                     className="border-slate-300"
                                 />
                                 <textarea
@@ -468,13 +639,25 @@ export default function TodosPage() {
                                     rows="4"
                                     placeholder="Deskripsi (opsional)..."
                                     value={formData.description}
-                                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                                    onChange={(e) =>
+                                        setFormData({
+                                            ...formData,
+                                            description: e.target.value,
+                                        })
+                                    }
                                 />
                                 <div className="flex gap-2">
-                                    <Button onClick={handleEditTodo} className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700">
+                                    <Button
+                                        onClick={handleEditTodo}
+                                        className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700"
+                                    >
                                         Update
                                     </Button>
-                                    <Button onClick={() => setShowEditModal(false)} variant="outline" className="flex-1">
+                                    <Button
+                                        onClick={() => setShowEditModal(false)}
+                                        variant="outline"
+                                        className="flex-1"
+                                    >
                                         Batal
                                     </Button>
                                 </div>

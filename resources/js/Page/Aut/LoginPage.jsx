@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm, usePage } from "@inertiajs/react";
-import AuthLayout from "@/Layouts/AuthLayout";
+import AuthLayout from "@/Layou/AuthLayout";
 import {
     Card,
     CardContent,
@@ -78,7 +78,10 @@ export default function LoginPage() {
                             <div onSubmit={handleSubmit}>
                                 <FieldGroup>
                                     <Field>
-                                        <FieldLabel htmlFor="email" className="text-gray-700">
+                                        <FieldLabel
+                                            htmlFor="email"
+                                            className="text-gray-700"
+                                        >
                                             📧 Email
                                         </FieldLabel>
                                         <Input
@@ -89,11 +92,18 @@ export default function LoginPage() {
                                             onChange={(e) =>
                                                 setData("email", e.target.value)
                                             }
-                                            className={errors.email ? "border-red-500" : ""}
+                                            className={
+                                                errors.email
+                                                    ? "border-red-500"
+                                                    : ""
+                                            }
                                         />
                                     </Field>
                                     <Field>
-                                        <FieldLabel htmlFor="password" className="text-gray-700">
+                                        <FieldLabel
+                                            htmlFor="password"
+                                            className="text-gray-700"
+                                        >
                                             🔑 Kata Sandi
                                         </FieldLabel>
                                         <Input
@@ -102,9 +112,16 @@ export default function LoginPage() {
                                             placeholder="Masukkan kata sandi"
                                             value={data.password}
                                             onChange={(e) =>
-                                                setData("password", e.target.value)
+                                                setData(
+                                                    "password",
+                                                    e.target.value
+                                                )
                                             }
-                                            className={errors.password ? "border-red-500" : ""}
+                                            className={
+                                                errors.password
+                                                    ? "border-red-500"
+                                                    : ""
+                                            }
                                         />
                                     </Field>
                                     <Field>
@@ -114,7 +131,9 @@ export default function LoginPage() {
                                             className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
                                             disabled={processing}
                                         >
-                                            {processing ? "⏳ Memproses..." : "🚀 Masuk"}
+                                            {processing
+                                                ? "⏳ Memproses..."
+                                                : "🚀 Masuk"}
                                         </Button>
                                         <FieldDescription className="text-center mt-4">
                                             Belum punya akun?{" "}
