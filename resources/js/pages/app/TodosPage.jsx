@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { router, usePage } from "@inertiajs/react";
-import AppLayout from "@/Layou/AppLayout";
+import AppLayout from "@/layout/AppLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

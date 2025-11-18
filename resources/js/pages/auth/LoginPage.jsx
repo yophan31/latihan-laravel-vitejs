@@ -1,5 +1,6 @@
 import React from "react";
-import AuthLayout from "@/Layou/AuthLayout";
+import { useForm, usePage } from "@inertiajs/react";
+import AuthLayout from "@/layout/AuthLayout";
 import {
     Card,
     CardContent,
@@ -13,54 +14,62 @@ import {
     FieldDescription,
     FieldGroup,
 } from "@/components/ui/field";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { CheckCircle2, AlertCircle } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Link, useForm } from "@inertiajs/react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
 
-export default function RegisterPage() {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        name: "",
+export default function LoginPage() {
+    const { success } = usePage().props;
+
+    const { data, setData, post, processing, errors } = useForm({
         email: "",
         password: "",
+        remember: false,
     });
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        post("/auth/register", {
-            onSuccess: () => {
-                reset("name", "email", "password");
-            },
-            onError: () => {
-                reset("password");
-            },
-        });
+        post("/auth/login");
     };
 
     return (
         <AuthLayout>
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 px-4">
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 px-4">
                 <div className="w-full max-w-md">
                     <Card className="shadow-xl border-0">
-                        <CardHeader className="space-y-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-t-lg">
+                        <CardHeader className="space-y-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-t-lg">
                             <CardTitle className="text-2xl">
-                                ✨ Daftar Akun Baru
+                                🔐 Masuk ke Akun Anda
                             </CardTitle>
-                            <CardDescription className="text-purple-100">
-                                Buat akun untuk memulai produktivitas Anda
+                            <CardDescription className="text-blue-100">
+                                Masukkan kredensial untuk melanjutkan
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="pt-6">
-                            {Object.keys(errors).length > 0 && (
+                            {success && (
+                                <div className="mb-4">
+                                    <Alert className="bg-green-50 border-green-200">
+                                        <CheckCircle2 className="h-4 w-4 text-green-600" />
+                                        <AlertTitle className="text-green-800">
+                                            Berhasil!
+                                        </AlertTitle>
+                                        <AlertDescription className="text-green-700">
+                                            {success}
+                                        </AlertDescription>
+                                    </Alert>
+                                </div>
+                            )}
+
+                            {errors.email && (
                                 <div className="mb-4">
                                     <Alert className="bg-red-50 border-red-200">
                                         <AlertCircle className="h-4 w-4 text-red-600" />
                                         <AlertTitle className="text-red-800">
-                                            Pendaftaran Gagal!
+                                            Login Gagal!
                                         </AlertTitle>
                                         <AlertDescription className="text-red-700">
-                                            {Object.values(errors)[0]}
+                                            {errors.email}
                                         </AlertDescription>
                                     </Alert>
                                 </div>
@@ -68,29 +77,6 @@ export default function RegisterPage() {
 
                             <div onSubmit={handleSubmit}>
                                 <FieldGroup>
-                                    <Field>
-                                        <FieldLabel
-                                            htmlFor="name"
-                                            className="text-gray-700"
-                                        >
-                                            👤 Nama Lengkap
-                                        </FieldLabel>
-                                        <Input
-                                            id="name"
-                                            type="text"
-                                            placeholder="Masukkan nama lengkap"
-                                            value={data.name}
-                                            onChange={(e) =>
-                                                setData("name", e.target.value)
-                                            }
-                                            className={
-                                                errors.name
-                                                    ? "border-red-500"
-                                                    : ""
-                                            }
-                                            required
-                                        />
-                                    </Field>
                                     <Field>
                                         <FieldLabel
                                             htmlFor="email"
@@ -111,7 +97,6 @@ export default function RegisterPage() {
                                                     ? "border-red-500"
                                                     : ""
                                             }
-                                            required
                                         />
                                     </Field>
                                     <Field>
@@ -124,7 +109,7 @@ export default function RegisterPage() {
                                         <Input
                                             id="password"
                                             type="password"
-                                            placeholder="Minimal 6 karakter"
+                                            placeholder="Masukkan kata sandi"
                                             value={data.password}
                                             onChange={(e) =>
                                                 setData(
@@ -137,28 +122,27 @@ export default function RegisterPage() {
                                                     ? "border-red-500"
                                                     : ""
                                             }
-                                            required
                                         />
                                     </Field>
                                     <Field>
                                         <Button
                                             type="button"
                                             onClick={handleSubmit}
-                                            className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+                                            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
                                             disabled={processing}
                                         >
                                             {processing
                                                 ? "⏳ Memproses..."
-                                                : "🎉 Daftar Sekarang"}
+                                                : "🚀 Masuk"}
                                         </Button>
                                         <FieldDescription className="text-center mt-4">
-                                            Sudah punya akun?{" "}
-                                            <Link
-                                                href="/auth/login"
-                                                className="text-purple-600 hover:text-purple-800 font-semibold hover:underline"
+                                            Belum punya akun?{" "}
+                                            <a
+                                                href="/auth/register"
+                                                className="text-blue-600 hover:text-blue-800 font-semibold hover:underline"
                                             >
-                                                Masuk di sini
-                                            </Link>
+                                                Daftar di sini
+                                            </a>
                                         </FieldDescription>
                                     </Field>
                                 </FieldGroup>
